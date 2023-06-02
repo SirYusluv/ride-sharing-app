@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { IAccessToken } from "../auth/auth.service";
-import { findUserWithEmail } from "../user/user.service";
 import { HTTP_STATUS, IResponse, JWT_ERROR } from "../util/data";
 import { extractTokenFromBearer } from "../util/helper";
+import { User } from "../user/user.schema";
 
 export async function isAuthenticatedGuard(
   req: Request,
@@ -16,7 +16,10 @@ export async function isAuthenticatedGuard(
       process.env.JWT_SECRET!
     ) as IAccessToken;
 
-    const user = await findUserWithEmail(decodedToken.emailAddress);
+    const user = await User.findOne({
+      emailAddress: decodedToken.emailAddress,
+    });
+
     if (!user) {
       const response: IResponse = {
         message: "Invalid authentication. Please log out and login.",
