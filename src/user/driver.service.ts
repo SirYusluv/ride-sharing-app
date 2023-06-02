@@ -26,6 +26,13 @@ export async function registerCar(
     const car = new Car(registerCarDto);
     car.owner = user._id;
     await car.save();
+
+    const response: IResponse = {
+      message: "Car successfully registered",
+      status: HTTP_STATUS.created,
+      car,
+    };
+    res.status(response.status).json(response);
   } catch (err: any) {
     logger.error(err);
     if (err.code === MONGOOSE_STATUS.duplicateError)
@@ -57,9 +64,10 @@ export async function unregisterCar(
     });
 
     const response: IResponse = {
-      message: "Car unregistered and deleted successfully",
+      message: "Car unregistered and deleted successfully.",
       status: HTTP_STATUS.ok,
     };
+    res.status(response.status).json(response);
   } catch (err: any) {
     logger.error(err);
     next(err);

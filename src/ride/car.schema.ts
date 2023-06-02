@@ -14,7 +14,12 @@ interface ICar {
 }
 
 const CarSchema = new Schema<ICar>({
-  owner: { type: Schema.Types.ObjectId, ref: User, required: true },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: User,
+    required: true,
+    unique: true,
+  },
   make: { type: String, required: true },
   model: { type: String, required: true },
   color: { type: String, required: true },

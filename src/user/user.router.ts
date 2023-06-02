@@ -20,4 +20,4 @@ AdminRouter.patch("/modify", adminModifyUser);
 UserRouter.patch("/modify", userModifyUser);
 
 DriverRouter.post("/register-car", registerCar);
-DriverRouter.delete("/unregister-car/:numberPlate", unregisterCar);
+DriverRouter.patch("/unregister-car/:numberPlate", unregisterCar);

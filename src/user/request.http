@@ -17,3 +17,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y
     "emailAddress": "muyuut@gmail.com",
     "address": "Bornu, Nigeria"
 }
+
+### register car
+POST http://localhost:3000/user/driver/register-car
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y2IyMGU0ZTIxMGY5ZWVjY2QiLCJlbWFpbEFkZHJlc3MiOiJtdXl1dXRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU3MjMwNTl9.WHOa9FxCeIEtqxOgT-ITwNZH4NQ0ZoYcMo8dtByUBYo
+
+{
+    "make": "Ford",
+    "model": "Ranger",
+    "color": "white",
+    "numberPlate": "233 422"
+}
+
+### unregister car
+PATCH http://localhost:3000/user/driver/unregister-car/233%20422
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y2IyMGU0ZTIxMGY5ZWVjY2QiLCJlbWFpbEFkZHJlc3MiOiJtdXl1dXRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU3MjMwNTl9.WHOa9FxCeIEtqxOgT-ITwNZH4NQ0ZoYcMo8dtByUBYo
