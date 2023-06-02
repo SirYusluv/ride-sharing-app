@@ -1,0 +1,22 @@
+### signup
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+    "emailAddress": "olan@gmail.com",
+    "firstName": "Olan",
+    "lastName": "Yusuf",
+    "password": "12345678",
+    "address": "Lagos, Nigeria",
+    "contact": "+2349048734555",
+    "accountType": "DRIVER"
+}
+
+### signin
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "emailAddress": "olan@gmail.com",
+    "password": "12345678"
+}

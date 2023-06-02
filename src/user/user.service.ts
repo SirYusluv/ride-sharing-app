@@ -11,8 +11,6 @@ import * as bcrypt from "bcrypt";
 
 const logger = createLogManager().createLogger("AuthService");
 
-// TODO: registerCar: Driver
-
 export async function createUser(signupDto: SignupDto) {
   try {
     const user = new User(signupDto);
