@@ -37,3 +37,16 @@ export const contactIsValid = (contact: string) =>
 
 export const accountTypeIsValid = (accountType: string) =>
   (getSupportedAccounts() as string[]).includes(accountType);
+
+export const makeIsValid = (make: string) =>
+  make.length >= NAME_MIN_LENGTH || make.length <= NAME_MAX_LENGTH;
+
+export const modelIsValid = (model: string) =>
+  model.length >= NAME_MIN_LENGTH || model.length <= NAME_MAX_LENGTH;
+
+export const colorIsValid = (color: string) =>
+  color.length >= NAME_MIN_LENGTH || color.length <= NAME_MAX_LENGTH;
+
+export const numberPlateIsValid = (numberPlate: string) =>
+  numberPlate.length >= NAME_MIN_LENGTH ||
+  numberPlate.length <= NAME_MAX_LENGTH;

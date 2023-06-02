@@ -1,10 +1,11 @@
 import { Document, model, Schema, Types } from "mongoose";
+import { User } from "../user/user.schema";
 
 export type CarType = Document<unknown, any, ICar> &
   Omit<ICar & { _id: Types.ObjectId }, never>;
 
 interface ICar {
-  ownerEmailAddress: string;
+  owner: Types.ObjectId;
   make: string;
   model: string;
   color: string;
@@ -13,7 +14,7 @@ interface ICar {
 }
 
 const CarSchema = new Schema<ICar>({
-  ownerEmailAddress: { type: String, required: true },
+  owner: { type: Schema.Types.ObjectId, ref: User, required: true },
   make: { type: String, required: true },
   model: { type: String, required: true },
   color: { type: String, required: true },
