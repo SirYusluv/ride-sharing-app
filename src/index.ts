@@ -9,6 +9,8 @@ import mongoose from "mongoose";
 import { HTTP_STATUS, IResponse, SPLIT_PATTERN } from "./util/data";
 import { createLogManager } from "simple-node-logger";
 import { AuthRouter } from "./auth/auth.router";
+import { UserRouter } from "./user/user.router";
+import { isAuthenticatedGuard } from "./guards/is-authenticated.guard";
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 const app = express();
@@ -37,6 +39,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.use("/auth", AuthRouter);
+app.use("/user", isAuthenticatedGuard, UserRouter);
 
 const errorHandler: ErrorRequestHandler = function (
   err: any,

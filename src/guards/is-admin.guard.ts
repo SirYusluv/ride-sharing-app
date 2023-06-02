@@ -10,7 +10,7 @@ export function isUserAdminUserGuard(
   next: NextFunction
 ) {
   try {
-    if (!req.body.user) {
+    if (!req.body._user) {
       const response: IResponse = {
         message: "Invalid authentication. Please log out and login again.",
         status: HTTP_STATUS.unauthorized,

@@ -2,15 +2,15 @@ import { NextFunction, Request, Response } from "express";
 import { ACCOUNTS, HTTP_STATUS, IResponse } from "../util/data";
 import { createLogManager } from "simple-node-logger";
 
-const logger = createLogManager().createLogger(isUserAdminUserGuard.name);
+const logger = createLogManager().createLogger(isUserDriverGuard.name);
 
-export function isUserAdminUserGuard(
+export function isUserDriverGuard(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   try {
-    if (!req.body.user) {
+    if (!req.body._user) {
       const response: IResponse = {
         message: "Invalid authentication. Please log out and login again.",
         status: HTTP_STATUS.unauthorized,

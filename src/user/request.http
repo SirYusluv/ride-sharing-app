@@ -1,0 +1,19 @@
+### admin modify user
+PATCH http://localhost:3000/user/admin/modify
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5ZWE2MjcyNGI4YmIzMTc1ZjQ3MWMiLCJlbWFpbEFkZHJlc3MiOiJvbGFuQGdtYWlsLmNvbSIsImFjY291bnRUeXBlIjoiQURNSU4iLCJpYXQiOjE2ODU3MjQxNDN9.j3BVZh0BIspgKPzCidJIvxvoR38ZjtkOFBcyV_Gelt8
+
+{
+    "emailAddress": "muyuut@gmail.com",
+    "isBlocked": false
+}
+
+### user modify user
+PATCH http://localhost:3000/user/modify
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y2IyMGU0ZTIxMGY5ZWVjY2QiLCJlbWFpbEFkZHJlc3MiOiJtdXl1dXRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU3MjMwNTl9.WHOa9FxCeIEtqxOgT-ITwNZH4NQ0ZoYcMo8dtByUBYo
+
+{
+    "emailAddress": "muyuut@gmail.com",
+    "address": "Bornu, Nigeria"
+}
