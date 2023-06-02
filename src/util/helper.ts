@@ -3,6 +3,10 @@ import {
   ACCOUNTS,
   HTTP_STATUS,
   SPLIT_PATTERN,
+  NAME_MIN_LENGTH,
+  NAME_MAX_LENGTH,
+  PASSWORD_MIN_LENHT,
+  CONTACT_MIN_LENGTH,
 } from "./data";
 
 export function extractTokenFromBearer(bearerToken: string) {
@@ -19,3 +23,17 @@ export const getSupportedAccounts = () =>
 
 export const emailIsValid = (emailAddress: string) =>
   EMAIL_ADDR_PATTERN.test(emailAddress);
+
+export const nameIsValid = (name: string) =>
+  name.length >= NAME_MIN_LENGTH || name.length <= NAME_MAX_LENGTH;
+
+export const passwordIsValid = (password: string) =>
+  password.length > PASSWORD_MIN_LENHT;
+
+export const addressIsValid = (address: string) => !!address;
+
+export const contactIsValid = (contact: string) =>
+  contact.startsWith("+") && contact.length > CONTACT_MIN_LENGTH;
+
+export const accountTypeIsValid = (accountType: string) =>
+  (getSupportedAccounts() as string[]).includes(accountType);

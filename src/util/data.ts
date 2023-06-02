@@ -8,6 +8,7 @@ export const PASSWORD_MIN_LENHT = 7;
 export const NAME_MIN_LENGTH = 1;
 export const NAME_MAX_LENGTH = 15;
 export const ADDRESS_MIN_LENGTH = 2;
+export const CONTACT_MIN_LENGTH = 7; // diffrent countries can differe in contact length
 
 export const HTTP_STATUS = {
   ok: 200,
