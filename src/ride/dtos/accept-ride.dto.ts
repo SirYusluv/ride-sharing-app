@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import { HTTP_STATUS, SPLIT_PATTERN } from "../../util/data";
-import { addressIsValid, isValidMongooseObjectId } from "../../util/helper";
+import { isValidMongooseObjectId } from "../../util/helper";
 
 export class AcceptRideDto {
   _id: Types.ObjectId | null = null;

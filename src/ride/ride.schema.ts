@@ -1,13 +1,14 @@
 import { Document, model, Schema, Types } from "mongoose";
 import { User } from "../user/user.schema";
+import { ACCOUNT_TYPES } from "../util/data";
 
-export type RIDE_COMPLETE_TYPE = "Complete" | "Cancelled";
+export type RIDE_COMPLETE_TYPE = "completed" | "cancelled";
 export const RIDE_COMPLETE: {
-  complete: RIDE_COMPLETE_TYPE;
+  completed: RIDE_COMPLETE_TYPE;
   cancelled: RIDE_COMPLETE_TYPE;
 } = {
-  complete: "Complete",
-  cancelled: "Cancelled",
+  completed: "completed",
+  cancelled: "cancelled",
 };
 
 export type RideType = Document<unknown, any, IRide> &
@@ -25,6 +26,7 @@ interface IRide {
   rideETAToDest: number; // min
   rideComplete: boolean;
   reasonForRideCompletion: RIDE_COMPLETE_TYPE;
+  rideEndedBy: ACCOUNT_TYPES;
   rideRequestTime: Date;
 }
 
@@ -42,6 +44,7 @@ const RideSchema = new Schema<IRide>({
   rideETAToDest: { type: Number },
   rideComplete: { type: Boolean, default: false },
   reasonForRideCompletion: { type: String },
+  rideEndedBy: { type: String },
   rideRequestTime: { type: Date, default: Date.now },
 });
 

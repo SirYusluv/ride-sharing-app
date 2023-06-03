@@ -6,12 +6,13 @@ import { adminModifyUser } from "./admin.service";
 import { userModifyUser } from "./user.service";
 import {
   acceptRide,
+  driverEndRide,
   findRides,
   registerCar,
   startRide,
   unregisterCar,
 } from "./driver.service";
-import { requestRide } from "./rider.service";
+import { requestRide, riderEndRide } from "./rider.service";
 import { isUserNotBlockedGuard } from "../guards/is-user-not-blocked.guard";
 
 export const UserRouter = Router();
@@ -42,3 +43,7 @@ DriverRouter.get("/find-rides", findRides);
 DriverRouter.patch("/accept-ride/:_id", acceptRide);
 
 DriverRouter.patch("/start-ride", startRide);
+
+DriverRouter.get("/end-ride", driverEndRide);
+
+RiderRouter.get("/end-ride", riderEndRide);

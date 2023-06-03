@@ -2,9 +2,10 @@ import { Types } from "mongoose";
 import { RequestRideDto } from "../user/dtos/request-ride.dto";
 import { createLogManager } from "simple-node-logger";
 import { calculateDist } from "../util/helper";
-import { Ride } from "./ride.schema";
+import { Ride, RideType } from "./ride.schema";
 import { UserType } from "../user/user.schema";
-import { HTTP_STATUS, IResponse, SPLIT_PATTERN } from "../util/data";
+import { ACCOUNTS, HTTP_STATUS, IResponse, SPLIT_PATTERN } from "../util/data";
+import { EndRideDto } from "./dtos/end-ride.dto";
 
 const logger = createLogManager().createLogger("RideService");
 
@@ -32,7 +33,7 @@ export async function findRide(
     throw err;
   }
 }
-//TODO: create not blocked guard
+
 // since its a dummy API, it returns all route with no driver yet
 export async function findRidesRequestingDriverAroundMe() {
   try {
@@ -70,6 +71,45 @@ export async function startActiveRide(driver: UserType) {
       throw new Error(`No active ride found.${SPLIT_PATTERN}${HTTP_STATUS.ok}`);
 
     ride.rideETAToDest = calculateDist("", "", 1, 50); // generate random number from 1 to 50
+    return await ride.save();
+  } catch (err: any) {
+    logger.error(err);
+    throw err;
+  }
+}
+
+export async function endRide(endRideDto: EndRideDto) {
+  try {
+    let ride: RideType | null = null;
+
+    // rider ends ride
+    if (endRideDto.riderId) {
+      ride = await Ride.findOne({
+        rider: endRideDto.riderId,
+        rideComplete: false,
+      });
+
+      ride && (ride.rideEndedBy = ACCOUNTS.rider);
+    }
+
+    // driver ends ride
+    if (endRideDto.driverId) {
+      ride = await Ride.findOne({
+        driver: endRideDto.driverId,
+        rideComplete: false,
+      });
+
+      ride && (ride.rideEndedBy = ACCOUNTS.driver);
+    }
+
+    if (!ride)
+      throw new Error(
+        `Ride not found.${SPLIT_PATTERN}${HTTP_STATUS.badRequest}`
+      );
+
+    ride.rideComplete = true;
+    ride.reasonForRideCompletion = endRideDto.reason!!;
+
     return await ride.save();
   } catch (err: any) {
     logger.error(err);

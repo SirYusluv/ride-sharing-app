@@ -4,6 +4,7 @@ import { RegisterCarDto } from "../ride/dtos/register-car.dto";
 import { Car } from "../ride/car.schema";
 import { UserType } from "./user.schema";
 import {
+  AMONT_PER_KM as AMOUNT_PER_KM,
   HTTP_STATUS,
   IResponse,
   MONGOOSE_STATUS,
@@ -12,10 +13,13 @@ import {
 import { UnregisterCarDto } from "../ride/dtos/unregister-car.dto";
 import {
   acceptRideWithId,
+  endRide,
   findRidesRequestingDriverAroundMe,
   startActiveRide,
 } from "../ride/ride.service";
 import { AcceptRideDto } from "../ride/dtos/accept-ride.dto";
+import { EndRideDto } from "../ride/dtos/end-ride.dto";
+import { RIDE_COMPLETE } from "../ride/ride.schema";
 
 const logger = createLogManager().createLogger("DriverService");
 
@@ -131,6 +135,38 @@ export async function startRide(
       message: "Ride successfully started.",
       status: HTTP_STATUS.ok,
       ride: await startActiveRide(user),
+    };
+    res.status(response.status).json(response);
+  } catch (err: any) {
+    logger.error(err);
+    next(err);
+  }
+}
+
+export async function driverEndRide(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const user = req.body._user as UserType;
+    const { reason } = req.query;
+    const endRideDto = new EndRideDto(
+      user._id.toString(),
+      undefined,
+      reason ? reason.toString() : undefined
+    );
+
+    const ride = await endRide(endRideDto);
+
+    const response: IResponse = {
+      message: "Ride successfully ended.",
+      status: HTTP_STATUS.ok,
+      amount:
+        ride.reasonForRideCompletion === RIDE_COMPLETE.completed
+          ? ride.distanceFromPickupToDest * AMOUNT_PER_KM
+          : null,
+      ride: ride,
     };
     res.status(response.status).json(response);
   } catch (err: any) {
