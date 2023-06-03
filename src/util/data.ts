@@ -45,3 +45,5 @@ export const ACCOUNTS: {
   driver: "DRIVER",
   rider: "RIDER",
 };
+
+export const AMONT_PER_KM = 750; // probably Naira

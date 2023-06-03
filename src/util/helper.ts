@@ -50,3 +50,13 @@ export const colorIsValid = (color: string) =>
 export const numberPlateIsValid = (numberPlate: string) =>
   numberPlate.length >= NAME_MIN_LENGTH ||
   numberPlate.length <= NAME_MAX_LENGTH;
+
+// dummy distance calculation
+export const calculateDist = (
+  _from: string,
+  _to: string,
+  randomNumRangeFrom: number = 2,
+  randomNumRangeTo: number = 100
+) =>
+  Math.floor(Math.random() * (randomNumRangeTo - randomNumRangeFrom + 1)) +
+  randomNumRangeFrom;

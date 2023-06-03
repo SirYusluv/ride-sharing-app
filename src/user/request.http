@@ -4,7 +4,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc5ZWE2MjcyNGI4YmIzMTc1ZjQ3MWMiLCJlbWFpbEFkZHJlc3MiOiJvbGFuQGdtYWlsLmNvbSIsImFjY291bnRUeXBlIjoiQURNSU4iLCJpYXQiOjE2ODU3MjQxNDN9.j3BVZh0BIspgKPzCidJIvxvoR38ZjtkOFBcyV_Gelt8
 
 {
-    "emailAddress": "muyuut@gmail.com",
+    "emailAddress": "mt@gmail.com",
     "isBlocked": false
 }
 
@@ -33,3 +33,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y
 ### unregister car
 PATCH http://localhost:3000/user/driver/unregister-car/233%20422
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y2IyMGU0ZTIxMGY5ZWVjY2QiLCJlbWFpbEFkZHJlc3MiOiJtdXl1dXRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU3MjMwNTl9.WHOa9FxCeIEtqxOgT-ITwNZH4NQ0ZoYcMo8dtByUBYo
+
+### request ride
+POST http://localhost:3000/user/rider/request-ride
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhZTRkOGM3ODFhODZkYjZiZmE4Y2IiLCJlbWFpbEFkZHJlc3MiOiJtdEBnbWFpbC5jb20iLCJhY2NvdW50VHlwZSI6IlJJREVSIiwiaWF0IjoxNjg1Nzc1NTk2fQ.RrAO0AYU6pqR0Hemc2K1k8iyIun1CIdxP4UGeYxzLOY
+
+{
+    "pickupPoint": "My Location",
+    "destination": "My Destination"
+}

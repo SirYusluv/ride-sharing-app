@@ -10,6 +10,7 @@ import {
   SPLIT_PATTERN,
 } from "../util/data";
 import { UnregisterCarDto } from "../ride/dtos/unregister-car.dto";
+import { findRidesRequestingDriverAroundMe } from "../ride/ride.service";
 
 const logger = createLogManager().createLogger("DriverService");
 
@@ -68,6 +69,23 @@ export async function unregisterCar(
       status: HTTP_STATUS.ok,
     };
     res.status(response.status).json(response);
+  } catch (err: any) {
+    logger.error(err);
+    next(err);
+  }
+}
+
+export async function findRides(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const response: IResponse = {
+      message: "",
+      status: HTTP_STATUS.ok,
+      rides: await findRidesRequestingDriverAroundMe(),
+    };
   } catch (err: any) {
     logger.error(err);
     next(err);
