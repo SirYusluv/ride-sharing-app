@@ -23,7 +23,7 @@ interface IRide {
   distanceFromPickupToDest: number;
   driverETAToPickup: number; // min
   rideETAToDest: number; // min
-  rideCompleteStatus: boolean;
+  rideComplete: boolean;
   reasonForRideCompletion: RIDE_COMPLETE_TYPE;
   rideRequestTime: Date;
 }
@@ -40,7 +40,7 @@ const RideSchema = new Schema<IRide>({
   distanceFromPickupToDest: { type: Number, required: true }, // km
   driverETAToPickup: { type: Number },
   rideETAToDest: { type: Number },
-  rideCompleteStatus: { type: Boolean, default: false },
+  rideComplete: { type: Boolean, default: false },
   reasonForRideCompletion: { type: String },
   rideRequestTime: { type: Date, default: Date.now },
 });

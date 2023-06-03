@@ -1,3 +1,4 @@
+import mongoose, { Mongoose, Types } from "mongoose";
 import {
   EMAIL_ADDR_PATTERN,
   ACCOUNTS,
@@ -50,6 +51,15 @@ export const colorIsValid = (color: string) =>
 export const numberPlateIsValid = (numberPlate: string) =>
   numberPlate.length >= NAME_MIN_LENGTH ||
   numberPlate.length <= NAME_MAX_LENGTH;
+
+export const isValidMongooseObjectId = (_id: string) => {
+  try {
+    new Types.ObjectId(_id);
+    return true;
+  } catch (_: any) {
+    return false;
+  }
+};
 
 // dummy distance calculation
 export const calculateDist = (

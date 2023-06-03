@@ -10,7 +10,12 @@ import {
   SPLIT_PATTERN,
 } from "../util/data";
 import { UnregisterCarDto } from "../ride/dtos/unregister-car.dto";
-import { findRidesRequestingDriverAroundMe } from "../ride/ride.service";
+import {
+  acceptRideWithId,
+  findRidesRequestingDriverAroundMe,
+  startActiveRide,
+} from "../ride/ride.service";
+import { AcceptRideDto } from "../ride/dtos/accept-ride.dto";
 
 const logger = createLogManager().createLogger("DriverService");
 
@@ -86,6 +91,48 @@ export async function findRides(
       status: HTTP_STATUS.ok,
       rides: await findRidesRequestingDriverAroundMe(),
     };
+    res.status(response.status).json(response);
+  } catch (err: any) {
+    logger.error(err);
+    next(err);
+  }
+}
+
+export async function acceptRide(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { _id } = req.params;
+    const acceptRideDto = new AcceptRideDto(_id);
+
+    const response: IResponse = {
+      message: "Ride accepted. Please proceed to client's location.",
+      status: HTTP_STATUS.ok,
+      ride: await acceptRideWithId(acceptRideDto._id!!, req.body._user),
+    };
+    res.status(response.status).json(response);
+  } catch (err: any) {
+    logger.error(err);
+    next(err);
+  }
+}
+
+export async function startRide(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const user = req.body._user as UserType;
+
+    const response: IResponse = {
+      message: "Ride successfully started.",
+      status: HTTP_STATUS.ok,
+      ride: await startActiveRide(user),
+    };
+    res.status(response.status).json(response);
   } catch (err: any) {
     logger.error(err);
     next(err);

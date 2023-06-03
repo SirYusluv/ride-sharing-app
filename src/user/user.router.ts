@@ -4,7 +4,13 @@ import { isUserDriverGuard } from "../guards/is-driver.guard";
 import { isUserRiderGuard } from "../guards/is-rider.guard";
 import { adminModifyUser } from "./admin.service";
 import { userModifyUser } from "./user.service";
-import { findRides, registerCar, unregisterCar } from "./driver.service";
+import {
+  acceptRide,
+  findRides,
+  registerCar,
+  startRide,
+  unregisterCar,
+} from "./driver.service";
 import { requestRide } from "./rider.service";
 import { isUserNotBlockedGuard } from "../guards/is-user-not-blocked.guard";
 
@@ -32,3 +38,7 @@ DriverRouter.patch("/unregister-car/:numberPlate", unregisterCar);
 RiderRouter.post("/request-ride", requestRide);
 
 DriverRouter.get("/find-rides", findRides);
+
+DriverRouter.patch("/accept-ride/:_id", acceptRide);
+
+DriverRouter.patch("/start-ride", startRide);

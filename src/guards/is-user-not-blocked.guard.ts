@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ACCOUNTS, HTTP_STATUS, IResponse } from "../util/data";
+import { HTTP_STATUS, IResponse } from "../util/data";
 import { createLogManager } from "simple-node-logger";
 import { UserType } from "../user/user.schema";
 

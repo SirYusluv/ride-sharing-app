@@ -43,3 +43,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhZTRkO
     "pickupPoint": "My Location",
     "destination": "My Destination"
 }
+
+### find rides
+GET http://localhost:3000/user/driver/find-rides
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y2IyMGU0ZTIxMGY5ZWVjY2QiLCJlbWFpbEFkZHJlc3MiOiJtdXl1dXRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU3MjMwNTl9.WHOa9FxCeIEtqxOgT-ITwNZH4NQ0ZoYcMo8dtByUBYo
+
+### accept ride
+PATCH http://localhost:3000/user/driver/accept-ride/647ae772933d906a48a44a3e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y2IyMGU0ZTIxMGY5ZWVjY2QiLCJlbWFpbEFkZHJlc3MiOiJtdXl1dXRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU3MjMwNTl9.WHOa9FxCeIEtqxOgT-ITwNZH4NQ0ZoYcMo8dtByUBYo
+
+### start ride
+PATCH http://localhost:3000/user/driver/start-ride
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y2IyMGU0ZTIxMGY5ZWVjY2QiLCJlbWFpbEFkZHJlc3MiOiJtdXl1dXRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU3MjMwNTl9.WHOa9FxCeIEtqxOgT-ITwNZH4NQ0ZoYcMo8dtByUBYo
