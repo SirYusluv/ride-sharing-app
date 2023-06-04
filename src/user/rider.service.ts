@@ -5,7 +5,7 @@ import { UserType } from "./user.schema";
 import { HTTP_STATUS, IResponse } from "../util/data";
 import { endRide, findRide } from "../ride/ride.service";
 import { EndRideDto } from "../ride/dtos/end-ride.dto";
-import { RIDE_COMPLETE } from "../ride/ride.schema";
+import { RIDE_COMPLETE } from "../ride/ride-info.schema";
 
 const logger = createLogManager().createLogger("RiderService");
 

@@ -19,8 +19,8 @@ import {
 } from "../ride/ride.service";
 import { AcceptRideDto } from "../ride/dtos/accept-ride.dto";
 import { EndRideDto } from "../ride/dtos/end-ride.dto";
-import { RIDE_COMPLETE, Ride } from "../ride/ride.schema";
-import { RideInfo } from "../ride/ride-info.schema";
+import { Ride } from "../ride/ride.schema";
+import { RIDE_COMPLETE, RideInfo } from "../ride/ride-info.schema";
 import { StartRideDto } from "../ride/dtos/start-ride.dto";
 import { Types } from "mongoose";
 
