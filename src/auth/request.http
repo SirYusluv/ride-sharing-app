@@ -1,9 +1,15 @@
+### NB: Response format { message: string, status: number, [key: string]: any } for every route
+
 ### signup
+### You need to sign up before being able other app feature
+### provide emailAddress, firstName, lastName, password, address, contact, accountType as request body
+### send it as a post request with the Content Type header to the below route
+### response will be { createdUser: UserType  } or { message: "Error info" }
 POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "emailAddress": "dr4@gmail.com",
+    "emailAddress": "dr5@gmail.com",
     "firstName": "Olan",
     "lastName": "Yusuf",
     "password": "12345678",
@@ -13,6 +19,10 @@ Content-Type: application/json
 }
 
 ### signin
+### To access any other route, you need the access token you will get when you sign in
+### provide emailAddress, password as request body
+### send it as a post request with the Content Type header to the below route
+### response will be { user: {accessToken: string, ...UserType}  } or { message: "Error info" }
 POST http://localhost:3000/auth/signin
 Content-Type: application/json
 

@@ -1,4 +1,10 @@
+### NB: every route here requires an AccessToken (Bearer Token), you can login to get it
+
 ### admin modify user
+### if you want to modify any user details (ADMIN only). NB: email address can't be modified
+### provide property you want to modify and their value (as stated in modify-user.dto file) as request body
+### send it as a patch request with the Content Type header to the below route
+### response will be { user: UserType  } or { message: "Error info" }
 PATCH http://localhost:3000/user/admin/modify
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjOTMwZjc5MWRjZTMyZTFlZGRhOGQiLCJlbWFpbEFkZHJlc3MiOiJhZG1pbkBnbWFpbC5jb20iLCJhY2NvdW50VHlwZSI6IkFETUlOIiwiaWF0IjoxNjg1ODg1OTAwfQ.48B9lw5bzo-WCdszebstcnhC8asiK3CTEgj0a5Z-lyk
@@ -10,6 +16,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjOTMwZ
 }
 
 ### user modify user
+### if you want to modify any user details (you can only modify your acct). NB: email address can't be modified but must be provided
+### provide property you want to modify and their value (as stated in modify-user.dto file) as request body. NB: only admin can provide isBlocked to block or block user
+### send it as a patch request with the Content Type header to the below route
+### response will be { user: UserType  } or { message: "Error info" }
 PATCH http://localhost:3000/user/modify
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjOTcxODJkMjcwODlkZDE4NDc0MWIiLCJlbWFpbEFkZHJlc3MiOiJkckBnbWFpbC5jb20iLCJhY2NvdW50VHlwZSI6IkRSSVZFUiIsImlhdCI6MTY4NTg4NjkzOX0.n0NdQ8vsnt_FmnNyaUcYyOeTRvdDTZUZt0vbGjM7Ds8
@@ -19,7 +29,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjOTcxO
     "address": "Bornu, Nigeria"
 }
 
-### register car
+### register car (driver's only route)
+### A driver needs a car to perform most operations.
+### provide make, model, color, numberPlate, capacity (< 4)  as request body.
+### send it as a post request with the Content Type header to the below route
+### response will be { car: CarType  } or { message: "Error info" }
 POST http://localhost:3000/user/driver/register-car
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjYTg2YzBhNDAzMzJjODllMWVlZDUiLCJlbWFpbEFkZHJlc3MiOiJkcjRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU4OTExODV9.bykNgcQ6SoKZqHy30g3nfG71fsISGp1Swk6wSJVXbY4
@@ -32,11 +46,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjYTg2Y
     "capacity": 1
 }
 
-### unregister car
+### unregister car (admin only route)
+### provide the number plate as param
+### send it as a patch request to the below route
+### response will be { message: "" }
 PATCH http://localhost:3000/user/driver/unregister-car/233%20422
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjOTcxODJkMjcwODlkZDE4NDc0MWIiLCJlbWFpbEFkZHJlc3MiOiJkckBnbWFpbC5jb20iLCJhY2NvdW50VHlwZSI6IkRSSVZFUiIsImlhdCI6MTY4NTg4OTA3Mn0.__hp4yhRiUsULhvA96SYqBeR8wM_Q_LkWjub5dkZUTs
 
-### request ride
+### request ride (rider(passenger) only route)
+### provide pickupPoint and destination as body
+### send it as a post request to the below route
+### response will be { rideInfo: rideInfo }
 POST http://localhost:3000/user/rider/request-ride
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjOTczNzJkMjcwODlkZDE4NDc0MjUiLCJlbWFpbEFkZHJlc3MiOiJyaUBnbWFpbC5jb20iLCJhY2NvdW50VHlwZSI6IlJJREVSIiwiaWF0IjoxNjg1ODkxMzI1fQ.Le_ulR4tpYCigk2njT54nWA2tvtcQWbt_y0j0bl9Ba8
@@ -46,26 +66,45 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjOTczN
     "destination": "My Destination"
 }
 
-### find rides
+### find rides (driver ony route)
+### A driver needs find ride in order to know what ride to accept.
+### send a get request with the Authorization header to the below route
+### response will be { rides: [rideType]  } or { message: "Error info" }
 GET http://localhost:3000/user/driver/find-rides
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjOTcxODJkMjcwODlkZDE4NDc0MWIiLCJlbWFpbEFkZHJlc3MiOiJkckBnbWFpbC5jb20iLCJhY2NvdW50VHlwZSI6IkRSSVZFUiIsImlhdCI6MTY4NTg4ODY0Mn0.OruLpXfC2n8j43j54luzEW5_CxJXD9Xd2SmPI1PG2hM
 
-### accept ride
+### accept ride (A driver needs to accept a ride befor such ride can be started)
+### Accepting a ride means the driver is enroute to the client's location
+### send a patch request with ride Id as param (see find ride to get ride Id) to the below route
+### response will be { rides: [rideType]  } or { message: "Error info" }
 PATCH http://localhost:3000/user/driver/accept-ride/647cad2e85a2de2507c13c51
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjYTg2YzBhNDAzMzJjODllMWVlZDUiLCJlbWFpbEFkZHJlc3MiOiJkcjRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU4OTExODV9.bykNgcQ6SoKZqHy30g3nfG71fsISGp1Swk6wSJVXbY4
 
-### get driver's uncompleted rides
+### get driver's uncompleted rides (driver's only route)
+### Ride needs to be started (once passenger has boarded), this route returns all user's unboarded rides
+### send a GET request to the below route
+### response will be { rides: [rideType]  } or { message: "Error info" }
 GET http://localhost:3000/user/driver/uncompleted-rides
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjYTg2YzBhNDAzMzJjODllMWVlZDUiLCJlbWFpbEFkZHJlc3MiOiJkcjRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU4OTExODV9.bykNgcQ6SoKZqHy30g3nfG71fsISGp1Swk6wSJVXbY4
 
-### start ride
+
+### start ride (driver's only route)
+### Once a passenger has boarded, the ride needs to be started, an unstarted route can't be completed, only cancelled
+### send a PATCH request with ride ID to the below route
+### response will be { ride: rideType  } or { message: "Error info" }
 PATCH http://localhost:3000/user/driver/start-ride/647cad2e85a2de2507c13c51
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjYTg2YzBhNDAzMzJjODllMWVlZDUiLCJlbWFpbEFkZHJlc3MiOiJkcjRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU4OTExODV9.bykNgcQ6SoKZqHy30g3nfG71fsISGp1Swk6wSJVXbY4
 
-### driver end ride
+### driver end ride (driver only route)
+### Once a ride has started, the ride needs to be completed or cancelled
+### send a GET request to the below route with rideId as param. also optionsl query paran "reason", value can be "completed" or "cancelled", default is completed
+### response will be { ride: rideType  } or { message: "Error info" }
 GET http://localhost:3000/user/driver/end-ride/647cad2e85a2de2507c13c51
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjYTg2YzBhNDAzMzJjODllMWVlZDUiLCJlbWFpbEFkZHJlc3MiOiJkcjRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU4OTExODV9.bykNgcQ6SoKZqHy30g3nfG71fsISGp1Swk6wSJVXbY4
 
-### rider end ride
+### rider end ride (rider/passenger only route)
+### for client to cancel the ride, started or not
+### send a GET request to the below route (ride Id is not needed since client can only have 1 open ride at a time)
+### response will be { ride: rideType  } or { message: "Error info" }
 GET http://localhost:3000/user/rider/end-ride
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdjOTczNzJkMjcwODlkZDE4NDc0MjUiLCJlbWFpbEFkZHJlc3MiOiJyaUBnbWFpbC5jb20iLCJhY2NvdW50VHlwZSI6IlJJREVSIiwiaWF0IjoxNjg1ODg3ODUxfQ.cUbqARZLWuQqmZu_0iMQv4Ck4KVWVJrW1NqTQxKAIAY
