@@ -41,7 +41,7 @@ export async function findRide(
 // since its a dummy API, it returns all route with no driver yet
 export async function findRidesRequestingDriverAroundMe() {
   try {
-    return await RideInfo.find({ driver: null });
+    return await RideInfo.find({ driver: null, rideComplete: false });
   } catch (err: any) {
     logger.error(err);
     throw err;
@@ -95,8 +95,12 @@ export async function startActiveRide(
       _id: startRideDto.rideId,
     });
 
-    if (!rideInfo || driver._id !== rideInfo.driver)
+    if (!rideInfo || !driver._id.equals(rideInfo.driver))
       throw new Error(`Ride not found.${SPLIT_PATTERN}${HTTP_STATUS.ok}`);
+
+    // any ride wit ETAToDest set has aleready started
+    if (rideInfo.rideETAToDest)
+      throw new Error(`Ride already started.${SPLIT_PATTERN}${HTTP_STATUS.ok}`);
 
     rideInfo.rideETAToDest = calculateDist("", "", 1, 50); // generate random number from 1 to 50
     return await rideInfo.save();
@@ -122,7 +126,7 @@ export async function endRide(endRideDto: EndRideDto) {
 
     // driver ends ride
     if (endRideDto.driverId) {
-      rideInfo = await Ride.findOne({
+      rideInfo = await RideInfo.findOne({
         driver: endRideDto.driverId, // not neccessarily needed
         _id: endRideDto.rideId,
       });
@@ -135,12 +139,21 @@ export async function endRide(endRideDto: EndRideDto) {
         `Ride not found.${SPLIT_PATTERN}${HTTP_STATUS.badRequest}`
       );
 
+    if (rideInfo.rideComplete)
+      throw new Error(
+        `Ride already completed.${SPLIT_PATTERN}${HTTP_STATUS.badRequest}`
+      );
+
     rideInfo.rideComplete = true;
     rideInfo.reasonForRideCompletion = endRideDto.reason!!;
 
     // if no reason is given from route param, set reason to completed
     rideInfo.reasonForRideCompletion =
       rideInfo.reasonForRideCompletion || RIDE_COMPLETE.completed;
+
+    // if driver hasn't started the ride and he is ending the ride then it is cancelled ride
+    if (endRideDto.driverId && !rideInfo.rideETAToDest)
+      rideInfo.reasonForRideCompletion = RIDE_COMPLETE.cancelled;
 
     return await rideInfo.save();
   } catch (err: any) {

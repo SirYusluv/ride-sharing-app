@@ -3,13 +3,13 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "emailAddress": "mt@gmail.com",
+    "emailAddress": "dr4@gmail.com",
     "firstName": "Olan",
     "lastName": "Yusuf",
     "password": "12345678",
     "address": "Lagos, Nigeria",
     "contact": "+2349048734555",
-    "accountType": "RIDER"
+    "accountType": "DRIVER"
 }
 
 ### signin
@@ -17,6 +17,6 @@ POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-    "emailAddress": "mt@gmail.com",
+    "emailAddress": "ri@gmail.com",
     "password": "12345678"
 }

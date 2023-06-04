@@ -1,4 +1,4 @@
-import { HTTP_STATUS, SPLIT_PATTERN } from "../../util/data";
+import { HTTP_STATUS, MAX_CAR_CAPACITY, SPLIT_PATTERN } from "../../util/data";
 import {
   colorIsValid,
   isValidCarCapacity,
@@ -65,6 +65,6 @@ export class RegisterCarDto {
       throw new Error(
         `Invalid number provided for car capacity.${SPLIT_PATTERN}${HTTP_STATUS.badRequest}`
       );
-    this.capacity = capacity || null;
+    this.capacity = capacity || MAX_CAR_CAPACITY;
   }
 }

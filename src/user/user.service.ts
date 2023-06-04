@@ -27,8 +27,20 @@ export async function userModifyUser(
 
     const user = req.body._user as UserType;
 
+    //you can only modify your account if you are not admin
+    if (emailAddress !== user.emailAddress) {
+      const response: IResponse = {
+        message: "You cannot perform this operaion.",
+        status: HTTP_STATUS.forbidden,
+      };
+      return res.status(response.status).json(response);
+    }
+
     // only admin has the permission to set isBlock
-    if (isBlocked && user.accountType !== ACCOUNTS.admin) {
+    if (
+      (isBlocked || isBlocked === false) &&
+      user.accountType !== ACCOUNTS.admin
+    ) {
       const response: IResponse = {
         message: "You are not authorized to block or unblock any user.",
         status: HTTP_STATUS.unauthorized,

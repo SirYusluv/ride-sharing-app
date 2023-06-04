@@ -181,7 +181,7 @@ export async function driverEndRide(
       user._id.toString(),
       undefined,
       rideId,
-      reason ? reason.toString() : undefined
+      reason ? reason.toString() : RIDE_COMPLETE.completed
     );
 
     const ride = await endRide(endRideDto);

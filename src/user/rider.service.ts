@@ -52,6 +52,7 @@ export async function riderEndRide(
     const endRideDto = new EndRideDto(
       undefined,
       user._id.toString(),
+      undefined,
       RIDE_COMPLETE.cancelled
     );
 

@@ -31,7 +31,7 @@ export class EndRideDto {
   }
 
   private setRiderId(riderId: string) {
-    if (!!riderId && !isValidMongooseObjectId(riderId))
+    if (riderId && !isValidMongooseObjectId(riderId))
       throw new Error(
         `Invalid rider id provided.${SPLIT_PATTERN}${HTTP_STATUS.badRequest}`
       );
@@ -39,7 +39,7 @@ export class EndRideDto {
   }
 
   private setRideId(rideId: string) {
-    if (!!rideId && !isValidMongooseObjectId(rideId))
+    if (rideId && !isValidMongooseObjectId(rideId))
       throw new Error(
         `Invalid ride id provided.${SPLIT_PATTERN}${HTTP_STATUS.badRequest}`
       );
