@@ -1,16 +1,23 @@
 import { Types } from "mongoose";
 import { HTTP_STATUS, SPLIT_PATTERN } from "../../util/data";
 import { isValidMongooseObjectId } from "../../util/helper";
-import { RIDE_COMPLETE, RIDE_COMPLETE_TYPE } from "../ride.schema";
+import { RIDE_COMPLETE, RIDE_COMPLETE_TYPE } from "../ride-info.schema";
 
 export class EndRideDto {
   driverId: Types.ObjectId | null = null;
   riderId: Types.ObjectId | null = null;
+  rideId: Types.ObjectId | null = null;
   reason: RIDE_COMPLETE_TYPE | null = null;
 
-  constructor(driverId?: string, riderId?: string, reason?: string) {
+  constructor(
+    driverId?: string,
+    riderId?: string,
+    rideId?: string,
+    reason?: string
+  ) {
     this.setDriverId(driverId || "");
     this.setRiderId(riderId || "");
+    this.setRideId(rideId || "");
     this.validateDriverOrRiderSet();
     this.setReason(reason || "");
   }
@@ -26,9 +33,17 @@ export class EndRideDto {
   private setRiderId(riderId: string) {
     if (!!riderId && !isValidMongooseObjectId(riderId))
       throw new Error(
-        `Invalid ride id provided.${SPLIT_PATTERN}${HTTP_STATUS.badRequest}`
+        `Invalid rider id provided.${SPLIT_PATTERN}${HTTP_STATUS.badRequest}`
       );
     this.riderId = riderId ? new Types.ObjectId(riderId) : null;
+  }
+
+  private setRideId(rideId: string) {
+    if (!!rideId && !isValidMongooseObjectId(rideId))
+      throw new Error(
+        `Invalid ride id provided.${SPLIT_PATTERN}${HTTP_STATUS.badRequest}`
+      );
+    this.rideId = rideId ? new Types.ObjectId(rideId) : null;
   }
 
   private setReason(reason: string) {

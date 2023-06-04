@@ -12,6 +12,7 @@ import { User, UserType } from "./user.schema";
 import * as bcrypt from "bcrypt";
 import { ModifyUserDto } from "./dtos/modify-user.dto";
 import { NextFunction, Request, Response } from "express";
+import { createDriverRide } from "./driver.service";
 
 const logger = createLogManager().createLogger("UserService");
 
@@ -64,7 +65,11 @@ export async function createUser(signupDto: SignupDto) {
   try {
     const user = new User(signupDto);
     user.password = await bcrypt.hash(user.password, BCRYPT_SALT);
-    return await user.save();
+    const createdUser = await user.save();
+
+    if (user.accountType === ACCOUNTS.driver) await createDriverRide(user);
+
+    return createdUser;
   } catch (err: any) {
     logger.error(err);
     if (err.code === MONGOOSE_STATUS.duplicateError) {

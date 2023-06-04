@@ -7,6 +7,7 @@ import { userModifyUser } from "./user.service";
 import {
   acceptRide,
   driverEndRide,
+  findDriverUncompletedRides,
   findRides,
   registerCar,
   startRide,
@@ -38,12 +39,15 @@ DriverRouter.patch("/unregister-car/:numberPlate", unregisterCar);
 
 RiderRouter.post("/request-ride", requestRide);
 
+// find rides to accept
 DriverRouter.get("/find-rides", findRides);
+
+DriverRouter.get("/uncompleted-rides", findDriverUncompletedRides);
 
 DriverRouter.patch("/accept-ride/:_id", acceptRide);
 
-DriverRouter.patch("/start-ride", startRide);
+DriverRouter.patch("/start-ride/:rideId", startRide);
 
-DriverRouter.get("/end-ride", driverEndRide);
+DriverRouter.get("/end-ride/:rideId", driverEndRide);
 
 RiderRouter.get("/end-ride", riderEndRide);

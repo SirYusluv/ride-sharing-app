@@ -19,7 +19,10 @@ import {
 } from "../ride/ride.service";
 import { AcceptRideDto } from "../ride/dtos/accept-ride.dto";
 import { EndRideDto } from "../ride/dtos/end-ride.dto";
-import { RIDE_COMPLETE } from "../ride/ride.schema";
+import { RIDE_COMPLETE, Ride } from "../ride/ride.schema";
+import { RideInfo } from "../ride/ride-info.schema";
+import { StartRideDto } from "../ride/dtos/start-ride.dto";
+import { Types } from "mongoose";
 
 const logger = createLogManager().createLogger("DriverService");
 
@@ -29,8 +32,14 @@ export async function registerCar(
   next: NextFunction
 ) {
   try {
-    const { make, model, color, numberPlate } = req.body;
-    const registerCarDto = new RegisterCarDto(make, model, color, numberPlate);
+    const { make, model, color, numberPlate, capacity } = req.body;
+    const registerCarDto = new RegisterCarDto(
+      make,
+      model,
+      color,
+      numberPlate,
+      capacity
+    );
     const user = req.body._user as UserType;
 
     const car = new Car(registerCarDto);
@@ -108,13 +117,25 @@ export async function acceptRide(
   next: NextFunction
 ) {
   try {
+    const user = req.body._user as UserType;
+
+    // a driver with no car should not be able to accept ride
+    if (!driverHasACar(user)) {
+      const response: IResponse = {
+        message:
+          "You need to have a car registered before you can start accepting rides.",
+        status: HTTP_STATUS.ok,
+      };
+      return res.status(response.status).json(response);
+    }
+
     const { _id } = req.params;
     const acceptRideDto = new AcceptRideDto(_id);
 
     const response: IResponse = {
       message: "Ride accepted. Please proceed to client's location.",
       status: HTTP_STATUS.ok,
-      ride: await acceptRideWithId(acceptRideDto._id!!, req.body._user),
+      ride: await acceptRideWithId(acceptRideDto, req.body._user),
     };
     res.status(response.status).json(response);
   } catch (err: any) {
@@ -129,12 +150,15 @@ export async function startRide(
   next: NextFunction
 ) {
   try {
+    const { rideId } = req.params;
+    const startRideDto = new StartRideDto(rideId);
+
     const user = req.body._user as UserType;
 
     const response: IResponse = {
       message: "Ride successfully started.",
       status: HTTP_STATUS.ok,
-      ride: await startActiveRide(user),
+      ride: await startActiveRide(startRideDto, user),
     };
     res.status(response.status).json(response);
   } catch (err: any) {
@@ -151,13 +175,19 @@ export async function driverEndRide(
   try {
     const user = req.body._user as UserType;
     const { reason } = req.query;
+    const { rideId } = req.params;
+
     const endRideDto = new EndRideDto(
       user._id.toString(),
       undefined,
+      rideId,
       reason ? reason.toString() : undefined
     );
 
     const ride = await endRide(endRideDto);
+
+    // decrement currRideCount
+    decrementCurrRideCount(user._id);
 
     const response: IResponse = {
       message: "Ride successfully ended.",
@@ -172,5 +202,66 @@ export async function driverEndRide(
   } catch (err: any) {
     logger.error(err);
     next(err);
+  }
+}
+
+export async function findDriverUncompletedRides(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const user = req.body._user as UserType;
+
+    const rides = await RideInfo.find({
+      driver: user._id,
+      rideComplete: false,
+    });
+
+    const response: IResponse = {
+      message: "",
+      status: HTTP_STATUS.ok,
+      rides: rides,
+    };
+    res.status(response.status).json(response);
+  } catch (err: any) {
+    logger.error(err);
+    next(err);
+  }
+}
+
+export async function createDriverRide(driver: UserType) {
+  try {
+    await new Ride({ driver: driver._id }).save();
+  } catch (err) {
+    logger.error(err);
+    throw err;
+  }
+}
+
+async function driverHasACar(driver: UserType) {
+  try {
+    const driverDoesHaveACar = await Car.findOne({ owner: driver._id });
+    return !!driverDoesHaveACar;
+  } catch (err: any) {
+    logger.error(err);
+    throw err;
+  }
+}
+
+async function decrementCurrRideCount(
+  driverId: Types.ObjectId,
+  decrementAmount: number = 1
+) {
+  try {
+    const ride = await Ride.findOne({ driver: driverId });
+
+    if (!ride) return;
+
+    ride.currentRideCount = ride.currentRideCount - decrementAmount;
+    return await ride.save();
+  } catch (err: any) {
+    logger.error(err);
+    throw err;
   }
 }

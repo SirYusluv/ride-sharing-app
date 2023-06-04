@@ -52,12 +52,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y
 PATCH http://localhost:3000/user/driver/accept-ride/647b98fd39a347cf94a8eb0c
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y2IyMGU0ZTIxMGY5ZWVjY2QiLCJlbWFpbEFkZHJlc3MiOiJtdXl1dXRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU3MjMwNTl9.WHOa9FxCeIEtqxOgT-ITwNZH4NQ0ZoYcMo8dtByUBYo
 
+### get driver's uncompleted rides
+PATCH http://localhost:3000/user/driver/uncompleted-rides
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y2IyMGU0ZTIxMGY5ZWVjY2QiLCJlbWFpbEFkZHJlc3MiOiJtdXl1dXRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU3MjMwNTl9.WHOa9FxCeIEtqxOgT-ITwNZH4NQ0ZoYcMo8dtByUBYo
+
 ### start ride
-PATCH http://localhost:3000/user/driver/start-ride
+PATCH http://localhost:3000/user/driver/start-ride/rideId
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y2IyMGU0ZTIxMGY5ZWVjY2QiLCJlbWFpbEFkZHJlc3MiOiJtdXl1dXRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU3MjMwNTl9.WHOa9FxCeIEtqxOgT-ITwNZH4NQ0ZoYcMo8dtByUBYo
 
 ### driver end ride
-GET http://localhost:3000/user/driver/end-ride?reason=cancelled
+GET http://localhost:3000/user/driver/end-ride/rideId?reason=cancelled
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDdhMTU4Y2IyMGU0ZTIxMGY5ZWVjY2QiLCJlbWFpbEFkZHJlc3MiOiJtdXl1dXRAZ21haWwuY29tIiwiYWNjb3VudFR5cGUiOiJEUklWRVIiLCJpYXQiOjE2ODU3MjMwNTl9.WHOa9FxCeIEtqxOgT-ITwNZH4NQ0ZoYcMo8dtByUBYo
 
 ### rider end ride

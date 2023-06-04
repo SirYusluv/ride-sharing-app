@@ -8,6 +8,7 @@ import {
   NAME_MAX_LENGTH,
   PASSWORD_MIN_LENHT,
   CONTACT_MIN_LENGTH,
+  MAX_CAR_CAPACITY,
 } from "./data";
 
 export function extractTokenFromBearer(bearerToken: string) {
@@ -60,6 +61,9 @@ export const isValidMongooseObjectId = (_id: string) => {
     return false;
   }
 };
+
+export const isValidCarCapacity = (capacity: number) =>
+  typeof capacity === "number" && capacity > 0 && capacity <= MAX_CAR_CAPACITY;
 
 // dummy distance calculation
 export const calculateDist = (
